@@ -1,7 +1,4 @@
-#![deny(clippy::all)]
-
-use std::cmp::min;
-
+use napi::bindgen_prelude::*;
 use napi_derive::napi;
 
 #[napi]
@@ -12,6 +9,12 @@ pub fn plus_100(input: u32) -> u32 {
 #[napi]
 pub fn minus_100(input: i32) -> i32 {
   input - 100
+}
+
+#[napi]
+pub async fn async_plus_100(input: Promise<u32>) -> Result<u32> {
+  let v = input.await?;
+  Ok(v + 100)
 }
 
 #[test]
