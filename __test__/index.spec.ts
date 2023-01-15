@@ -22,6 +22,16 @@ test("asyncPlus100 function from native code", async (t) => {
   t.is(actual, 120);
 });
 
+test("reject asyncPlus100 function from native code", async (t) => {
+  const fixture = new Promise<number>((_, reject) => {
+    setTimeout(() => reject(new Error("Oops!")), 50);
+  });
+
+  const exepctionAction = async () => asyncPlus100(fixture);
+
+  await t.throwsAsync(exepctionAction);
+});
+
 test("withNameAndAge", async (t) => {
   const fixture = Person.withNameAndAge("yohan", 20);
 
